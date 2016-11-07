@@ -10,11 +10,13 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include <string.h>
 
 
 //==============================================================================
-HighPassFilterAudioProcessor::HighPassFilterAudioProcessor()
+HighPassFilterAudioProcessor::HighPassFilterAudioProcessor(): m_knob1(0)
 {
+	m_fCutoff = m_knob1;
 }
 
 HighPassFilterAudioProcessor::~HighPassFilterAudioProcessor()
@@ -26,6 +28,63 @@ const String HighPassFilterAudioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
+
+int HighPassFilterAudioProcessor::getNumParameters()
+{
+	return totalNumParams;
+}
+
+float HighPassFilterAudioProcessor::getParameter(int index)
+{
+	switch (index) {
+	case knob1Param: return m_knob1;
+	default: return 0.0;
+	}
+}
+
+void HighPassFilterAudioProcessor::setParameter(int index, float newValue)
+{
+	switch (index) {
+	case knob1Param: m_knob1 = newValue;
+		m_fCutoff = m_knob1;
+
+	default: break;
+	}
+}
+
+const String HighPassFilterAudioProcessor::getParameterName(int index)
+{
+	switch (index){
+	case knob1Param: return "Cutoff";
+	default: return String::empty;
+	}
+}
+
+const String HighPassFilterAudioProcessor::getParameterText(int index)
+{
+	return String(getParameter(index), 2);
+}
+
+const String HighPassFilterAudioProcessor::getInputChannelName(int channelIndex) const
+{
+	return String(channelIndex + 1);
+}
+
+const String HighPassFilterAudioProcessor::getOutputChannelName(int channelIndex) const
+{
+	return String(channelIndex + 1);
+}
+
+bool HighPassFilterAudioProcessor::isInputChannelStereoPair(int index) const
+{
+	return true;
+}
+
+bool HighPassFilterAudioProcessor::isOutputChannelStereoPair(int index) const
+{
+	return true;
+}
+
 
 bool HighPassFilterAudioProcessor::acceptsMidi() const
 {
@@ -43,6 +102,11 @@ bool HighPassFilterAudioProcessor::producesMidi() const
    #else
     return false;
    #endif
+}
+
+bool HighPassFilterAudioProcessor::silenceInProducesSilenceOut() const
+{
+	return false;
 }
 
 double HighPassFilterAudioProcessor::getTailLengthSeconds() const
@@ -79,6 +143,7 @@ void HighPassFilterAudioProcessor::prepareToPlay (double sampleRate, int samples
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+	m_fCutoff = m_knob1;
 }
 
 void HighPassFilterAudioProcessor::releaseResources()
@@ -114,36 +179,24 @@ bool HighPassFilterAudioProcessor::setPreferredBusArrangement (bool isInput, int
 
 void HighPassFilterAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-    const int totalNumInputChannels  = getTotalNumInputChannels();
-    const int totalNumOutputChannels = getTotalNumOutputChannels();
-
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
-    for (int i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
-
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    for (int channel = 0; channel < getNumInputChannels(); ++channel)
     {
         float* channelData = buffer.getWritePointer (channel);
-		for (int i = 0; i < buffer.getNumSamples; i++)
+		for (int i = 0; i < buffer.getNumSamples(); i++)
 		{
 			if (channel == 0)
 			{
-				filter.highpass(channelData[i], z0, p0, theta0);
+				channelData[i] = filter.highpass(channelData[i], z0, p0, theta0);
 			}
 
 			if (channel == 1)
 			{
-				filter.highpass(channelData[i], z0, p0, theta0);
+				channelData[i] = filter.highpass(channelData[i], z0, p0, theta0);
 			}
 		}
-    }
+    }    
+	for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
+        buffer.clear (i, 0, buffer.getNumSamples());
 }
 
 //==============================================================================

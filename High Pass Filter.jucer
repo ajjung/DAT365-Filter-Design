@@ -44,6 +44,7 @@
         <MODULEPATH id="juce_audio_formats" path="../../../../Program Files (x86)/JUCE/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../../../../Program Files (x86)/JUCE/modules"/>
         <MODULEPATH id="juce_audio_plugin_client" path="../../../../Program Files (x86)/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../../../Program Files (x86)/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <VS2013 targetFolder="Builds/VisualStudio2013">
@@ -54,20 +55,21 @@
                        isDebug="0" optimisation="3" targetName="High Pass Filter"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../../../Program Files (x86)/JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../../../Program Files (x86)/JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../../../Program Files (x86)/JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../../../Program Files (x86)/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../../../Program Files (x86)/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../../../Program Files (x86)/JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../../../../Program Files (x86)/JUCE/modules"/>
-        <MODULEPATH id="juce_video" path="../../../../Program Files (x86)/JUCE/modules"/>
-        <MODULEPATH id="juce_opengl" path="../../../../Program Files (x86)/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../../../../Program Files (x86)/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../../../Program Files (x86)/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../../../Program Files (x86)/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../../../Program Files (x86)/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="../../../../Program Files (x86)/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="..\..\..\..\..\Program Files (x86)\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="..\..\..\..\..\Program Files (x86)\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="..\..\..\..\..\Program Files (x86)\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="..\..\..\..\..\Program Files (x86)\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="..\..\..\..\..\Program Files (x86)\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="..\..\..\..\..\Program Files (x86)\JUCE\modules"/>
+        <MODULEPATH id="juce_cryptography" path="..\..\..\..\..\Program Files (x86)\JUCE\modules"/>
+        <MODULEPATH id="juce_video" path="..\..\..\..\..\Program Files (x86)\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl" path="..\..\..\..\..\Program Files (x86)\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_basics" path="..\..\..\..\..\Program Files (x86)\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="..\..\..\..\..\Program Files (x86)\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="..\..\..\..\..\Program Files (x86)\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="..\..\..\..\..\Program Files (x86)\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="..\..\..\..\..\Program Files (x86)\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../../../Program Files (x86)/JUCE/modules"/>
       </MODULEPATHS>
     </VS2013>
   </EXPORTFORMATS>
@@ -77,6 +79,7 @@
     <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>

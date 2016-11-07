@@ -25,39 +25,59 @@ public:
     ~HighPassFilterAudioProcessor();
 
     //==============================================================================
-    void prepareToPlay (double sampleRate, int samplesPerBlock) override;
-    void releaseResources() override;
+	//==============================================================================
+	void prepareToPlay(double sampleRate, int samplesPerBlock) override;
+	void releaseResources() override;
 
-   #ifndef JucePlugin_PreferredChannelConfigurations
-    bool setPreferredBusArrangement (bool isInput, int bus, const AudioChannelSet& preferredSet) override;
-   #endif
+	void processBlock(AudioSampleBuffer&, MidiBuffer&) override;
 
-    void processBlock (AudioSampleBuffer&, MidiBuffer&) override;
+	//==============================================================================
+	AudioProcessorEditor* createEditor() override;
+	bool hasEditor() const override;
 
-    //==============================================================================
-    AudioProcessorEditor* createEditor() override;
-    bool hasEditor() const override;
+	//==============================================================================
+	const String getName() const override;
+	bool HighPassFilterAudioProcessor::setPreferredBusArrangement(bool isInput, int bus, const AudioChannelSet& preferredSet);
+	int getNumParameters() override;
+	float getParameter(int index) override;
+	void setParameter(int index, float newValue) override;
 
-    //==============================================================================
-    const String getName() const override;
+	const String getParameterName(int index) override;
+	const String getParameterText(int index) override;
 
-    bool acceptsMidi() const override;
-    bool producesMidi() const override;
-    double getTailLengthSeconds() const override;
+	const String getInputChannelName(int channelIndex) const override;
+	const String getOutputChannelName(int channelIndex) const override;
+	bool isInputChannelStereoPair(int index) const override;
+	bool isOutputChannelStereoPair(int index) const override;
 
-    //==============================================================================
-    int getNumPrograms() override;
-    int getCurrentProgram() override;
-    void setCurrentProgram (int index) override;
-    const String getProgramName (int index) override;
-    void changeProgramName (int index, const String& newName) override;
+	bool acceptsMidi() const override;
+	bool producesMidi() const override;
+	bool silenceInProducesSilenceOut() const override;
+	double getTailLengthSeconds() const override;
 
-    //==============================================================================
-    void getStateInformation (MemoryBlock& destData) override;
-    void setStateInformation (const void* data, int sizeInBytes) override;
+	//==============================================================================
+	int getNumPrograms() override;
+	int getCurrentProgram() override;
+	void setCurrentProgram(int index) override;
+	const String getProgramName(int index) override;
+	void changeProgramName(int index, const String& newName) override;
+
+	//==============================================================================
+	void getStateInformation(MemoryBlock& destData) override;
+	void setStateInformation(const void* data, int sizeInBytes) override;
+	
+	enum Parameters{
+		knob1Param,
+		totalNumParams
+	};
 
 private:
-	double p0, z0, theta0;
+	float m_knob1;
+	float m_fCutoff;
+
+	double p0 = 0.9;
+	double z0 = 0.0; 
+	double theta0 = 0.0;
 	double PI = 4 * atan(1);
 	biquad filter;
     //==============================================================================

@@ -20,7 +20,7 @@ void biquad::calculate(double z0, double p0, double theta0, double *coeff)
 	a1 = (-1) * (p0 + p0) * cos(theta0);
 	a2 = (-1) * (p0 * p0);
 
-	coeff[0] = 0.0;
+	coeff[0] = 1;
 	coeff[1] = b1;
 	coeff[2] = b2;
 	coeff[3] = a1;

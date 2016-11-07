@@ -18,7 +18,10 @@
 //==============================================================================
 /**
 */
-class HighPassFilterAudioProcessorEditor  : public AudioProcessorEditor
+class HighPassFilterAudioProcessorEditor  : public AudioProcessorEditor,
+	Slider::Listener,
+	Timer
+
 {
 public:
     HighPassFilterAudioProcessorEditor (HighPassFilterAudioProcessor&);
@@ -27,12 +30,14 @@ public:
     //==============================================================================
     void paint (Graphics&) override;
     void resized() override;
+	void timerCallback()override;
+	void sliderValueChanged(Slider* sliderThatWasChanged) override;
 
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     HighPassFilterAudioProcessor& processor;
-
+	ScopedPointer<Slider> knob1;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HighPassFilterAudioProcessorEditor)
 };
 
