@@ -16,14 +16,21 @@
 class biquad
 {
 public:
-	void calculate(double z0, double p0, double theta0, double *coeff);
-	float highpass(double in, double z0, double p0, double theta0);
+	void setCutOff(float cutoff);
+	void setSampleRate(double sampleRate);
+	float highpass(float *in, int size, int n);
 
 private:
-	double b1, b2, a1, a2;
-	double a[2], b[2];
-	double coeff[5];
-	float out;
+	double r;
+	double m_cutOff;
+	double m_sampleRate;
+	double c;
+	double a1;
+	double a2;
+	double a3;
+	double b1;
+	double b2;
+	float *out;
 };
 
 

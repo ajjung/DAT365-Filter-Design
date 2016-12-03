@@ -74,12 +74,11 @@ public:
 private:
 	float m_knob1;
 	float m_fCutoff;
-
-	double p0 = 0.9;
-	double z0 = 0.0; 
-	double theta0 = 0.0;
-	double PI = 4 * atan(1);
+	int bufsize;
 	biquad filter;
+	float *out;
+	float *dryBuffer;
+	int dryBufferSize;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HighPassFilterAudioProcessor)
 };

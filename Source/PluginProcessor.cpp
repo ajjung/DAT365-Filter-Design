@@ -17,6 +17,7 @@
 HighPassFilterAudioProcessor::HighPassFilterAudioProcessor(): m_knob1(0)
 {
 	m_fCutoff = m_knob1;
+	filter.setCutOff(m_fCutoff);
 }
 
 HighPassFilterAudioProcessor::~HighPassFilterAudioProcessor()
@@ -138,12 +139,46 @@ void HighPassFilterAudioProcessor::changeProgramName (int index, const String& n
 {
 }
 
+#ifndef JucePlugin_PreferredChannelConfigurations
+bool HighPassFilterAudioProcessor::setPreferredBusArrangement(bool isInput, int bus, const AudioChannelSet& preferredSet)
+{
+	// Reject any bus arrangements that are not compatible with your plugin
+
+	const int numChannels = preferredSet.size();
+
+#if JucePlugin_IsMidiEffect
+	if (numChannels != 0)
+		return false;
+#elif JucePlugin_IsSynth
+	if (isInput || (numChannels != 1 && numChannels != 2))
+		return false;
+#else
+	if (numChannels != 1 && numChannels != 2)
+		return false;
+
+	if (!AudioProcessor::setPreferredBusArrangement(!isInput, bus, preferredSet))
+		return false;
+#endif
+
+	return AudioProcessor::setPreferredBusArrangement(isInput, bus, preferredSet);
+}
+#endif
+
 //==============================================================================
 void HighPassFilterAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
 	m_fCutoff = m_knob1;
+	filter.setCutOff(m_fCutoff);
+	filter.setSampleRate(sampleRate);
+
+	dryBufferSize = samplesPerBlock;
+	dryBuffer = new float[dryBufferSize];
+
+	for (int i = 0; i<dryBufferSize; i++) {
+		dryBuffer[i] = 0.0;
+	}
 }
 
 void HighPassFilterAudioProcessor::releaseResources()
@@ -152,48 +187,18 @@ void HighPassFilterAudioProcessor::releaseResources()
     // spare memory, etc.
 }
 
-#ifndef JucePlugin_PreferredChannelConfigurations
-bool HighPassFilterAudioProcessor::setPreferredBusArrangement (bool isInput, int bus, const AudioChannelSet& preferredSet)
-{
-    // Reject any bus arrangements that are not compatible with your plugin
-
-    const int numChannels = preferredSet.size();
-
-   #if JucePlugin_IsMidiEffect
-    if (numChannels != 0)
-        return false;
-   #elif JucePlugin_IsSynth
-    if (isInput || (numChannels != 1 && numChannels != 2))
-        return false;
-   #else
-    if (numChannels != 1 && numChannels != 2)
-        return false;
-
-    if (! AudioProcessor::setPreferredBusArrangement (! isInput, bus, preferredSet))
-        return false;
-   #endif
-
-    return AudioProcessor::setPreferredBusArrangement (isInput, bus, preferredSet);
-}
-#endif
-
 void HighPassFilterAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
     for (int channel = 0; channel < getNumInputChannels(); ++channel)
     {
-        float* channelData = buffer.getWritePointer (channel);
-		for (int i = 0; i < buffer.getNumSamples(); i++)
-		{
-			if (channel == 0)
-			{
-				channelData[i] = filter.highpass(channelData[i], z0, p0, theta0);
-			}
+		float* channelData = buffer.getWritePointer(channel);
+		bufsize = buffer.getNumSamples();
 
-			if (channel == 1)
-			{
-				channelData[i] = filter.highpass(channelData[i], z0, p0, theta0);
-			}
-		}
+		for (int i = 0; i < bufsize; i++)
+			dryBuffer[i] = channelData[i];
+		
+		for (int n = 0; n < bufsize; n++)
+			channelData[n] = filter.highpass(dryBuffer, bufsize, n);
     }    
 	for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
         buffer.clear (i, 0, buffer.getNumSamples());

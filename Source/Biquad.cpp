@@ -10,37 +10,31 @@
 
 #include "Biquad.h"
 
-void biquad::calculate(double z0, double p0, double theta0, double *coeff)
+void biquad::setSampleRate(double sampleRate)
 {
-	// zeros
-	b1 = (z0 + z0) * cos(theta0);
-	b2 = (z0 * z0);
-
-	// poles
-	a1 = (-1) * (p0 + p0) * cos(theta0);
-	a2 = (-1) * (p0 * p0);
-
-	coeff[0] = 1;
-	coeff[1] = b1;
-	coeff[2] = b2;
-	coeff[3] = a1;
-	coeff[4] = a2;
+	m_sampleRate = sampleRate;
 }
 
-float biquad::highpass(double in, double z0, double p0, double theta0)
+void biquad::setCutOff(float cutoff)
 {
-	calculate(z0, p0, theta0, coeff);
+	m_cutOff = cutoff;
+}
 
-	a[0] = 0.0;
-	a[1] = 0.0;
-	b[0] = 0.0;
-	b[1] = 0.0;
+float biquad::highpass(float *in, int size, int n)
+{
+	out = new float[size];
+	float r_value = 2;
+	r = sqrt(r_value);
+	double f = m_cutOff;
 
-	out = in * coeff[0] + b[0] * coeff[1] + b[1] * coeff[2] + a[0] * coeff[3] + a[1] * coeff[4];
-	a[1] = a[0];
-	a[0] = out;
-	b[1] = b[0];
-	b[0] = in;
+	c = tan(3.14 * f / m_sampleRate);
+	a1 = 1.0 / (1.0 + r * c + c * c);
+	a2 = -2 * a1;
+	a3 = a1;
+	b1 = 2.0 * (c*c - 1.0) * a1;
+	b2 = (1.0 - r * c + c * c) * a1;
 
-	return out;
+	out[n] = a1 * in[n] + a2 * in[n - 1] + a3 * in[n - 2] - b1 * out[n - 1] - b2 * out[n - 2];
+
+	return out[n];
 }
