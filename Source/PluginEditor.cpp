@@ -21,16 +21,15 @@ HighPassFilterAudioProcessorEditor::HighPassFilterAudioProcessorEditor (HighPass
 	setSize (400, 300);
 	addAndMakeVisible(knob1 = new Slider("Knob - 1"));
 
-	//knob1 // Gain 
-	knob1->setRange(0.0, 100.0);
+	//knob1 // Cutoff
+	knob1->setRange(20, 10000);
 	knob1->setTextBoxStyle(Slider::TextBoxBelow, false, 60, 15);
-	knob1->setTextValueSuffix(" %");
+	knob1->setTextValueSuffix(" hz");
 	knob1->setSliderStyle(Slider::Rotary);
 	knob1->setColour(Slider::rotarySliderFillColourId, Colours::grey);
 	knob1->setColour(Slider::rotarySliderOutlineColourId, Colours::white);
 	knob1->addListener(this);
-	knob1->setValue(100.0, sendNotification);
-	knob1->setBounds(10, 90, 90, 90);
+	knob1->setBounds(150, 90, 90, 90);
 
 	startTimer(50);
 }
@@ -43,11 +42,11 @@ HighPassFilterAudioProcessorEditor::~HighPassFilterAudioProcessorEditor()
 //==============================================================================
 void HighPassFilterAudioProcessorEditor::paint (Graphics& g)
 {
-	g.fillAll(Colours::black);
+	g.fillAll(Colours::darkblue);
 	g.setColour(Colours::white);
 	g.setFont(Font("Arial", 13, Font::bold + Font::italic));
 	//knob text
-	g.drawSingleLineText("Gain", 42, 80); //this is knob 1
+	g.drawSingleLineText("Cutoff", 182, 80); //this is knob 1
 }
 
 void HighPassFilterAudioProcessorEditor::timerCallback()

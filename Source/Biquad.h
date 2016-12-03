@@ -16,9 +16,10 @@
 class biquad
 {
 public:
+	biquad();
 	void setCutOff(float cutoff);
 	void setSampleRate(double sampleRate);
-	float highpass(float *in, int size, int n);
+	void highpass(float *in, int size);
 
 private:
 	double r;
@@ -31,6 +32,8 @@ private:
 	double b1;
 	double b2;
 	float *out;
+	float v1 = 0;
+	float v2 = 0;
 };
 
 

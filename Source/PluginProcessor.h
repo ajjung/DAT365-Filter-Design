@@ -75,10 +75,9 @@ private:
 	float m_knob1;
 	float m_fCutoff;
 	int bufsize;
-	biquad filter;
+	biquad filterL;
+	biquad filterR;
 	float *out;
-	float *dryBuffer;
-	int dryBufferSize;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HighPassFilterAudioProcessor)
 };

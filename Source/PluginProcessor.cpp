@@ -16,8 +16,15 @@
 //==============================================================================
 HighPassFilterAudioProcessor::HighPassFilterAudioProcessor(): m_knob1(0)
 {
+	m_fCutoff = 0;
+
 	m_fCutoff = m_knob1;
-	filter.setCutOff(m_fCutoff);
+
+	filterL = biquad();
+	filterL.setCutOff(m_fCutoff);
+
+	filterR = biquad();
+	filterR.setCutOff(m_fCutoff);
 }
 
 HighPassFilterAudioProcessor::~HighPassFilterAudioProcessor()
@@ -47,7 +54,10 @@ void HighPassFilterAudioProcessor::setParameter(int index, float newValue)
 {
 	switch (index) {
 	case knob1Param: m_knob1 = newValue;
-		m_fCutoff = m_knob1;
+		m_fCutoff = m_knob1; 
+		
+		filterL.setCutOff(m_fCutoff);
+		filterR.setCutOff(m_fCutoff);break;
 
 	default: break;
 	}
@@ -170,15 +180,12 @@ void HighPassFilterAudioProcessor::prepareToPlay (double sampleRate, int samples
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
 	m_fCutoff = m_knob1;
-	filter.setCutOff(m_fCutoff);
-	filter.setSampleRate(sampleRate);
 
-	dryBufferSize = samplesPerBlock;
-	dryBuffer = new float[dryBufferSize];
+	filterL.setCutOff(m_fCutoff);
+	filterL.setSampleRate(sampleRate);
 
-	for (int i = 0; i<dryBufferSize; i++) {
-		dryBuffer[i] = 0.0;
-	}
+	filterR.setCutOff(m_fCutoff);
+	filterR.setSampleRate(sampleRate);
 }
 
 void HighPassFilterAudioProcessor::releaseResources()
@@ -189,17 +196,13 @@ void HighPassFilterAudioProcessor::releaseResources()
 
 void HighPassFilterAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-    for (int channel = 0; channel < getNumInputChannels(); ++channel)
-    {
-		float* channelData = buffer.getWritePointer(channel);
-		bufsize = buffer.getNumSamples();
+	float* channelDataL = buffer.getWritePointer(0);
+	float* channelDataR = buffer.getWritePointer(1);
+	bufsize = buffer.getNumSamples();
 
-		for (int i = 0; i < bufsize; i++)
-			dryBuffer[i] = channelData[i];
-		
-		for (int n = 0; n < bufsize; n++)
-			channelData[n] = filter.highpass(dryBuffer, bufsize, n);
-    }    
+	filterL.highpass(channelDataL, bufsize);
+	filterR.highpass(channelDataR, bufsize);
+
 	for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 }
