@@ -68,12 +68,17 @@ public:
 	
 	enum Parameters{
 		knob1Param,
+		knob2Param,
 		totalNumParams
 	};
 
 private:
 	float m_knob1;
+	float m_knob2;
+
 	float m_fCutoff;
+	float m_fGain;
+
 	int bufsize;
 	biquad filterL;
 	biquad filterR;

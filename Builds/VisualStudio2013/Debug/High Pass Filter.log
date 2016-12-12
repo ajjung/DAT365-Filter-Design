@@ -1,11 +1,18 @@
-﻿Build started 12/3/2016 1:32:44 PM.
+﻿Build started 12/10/2016 10:47:32 AM.
      1>Project "C:\Users\Anthony\Documents\GitHub\DAT365-Filter-Design\Builds\VisualStudio2013\High Pass Filter.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\SDKs\VST3 SDK" /I..\..\JuceLibraryCode /I"..\..\..\..\..\..\..\Program Files (x86)\JUCE\modules" /ZI /nologo /W4 /WX- /MP /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D WIN32 /D _WINDOWS /D DEBUG /D _DEBUG /D JUCER_VS2013_78A5020=1 /D JUCE_APP_VERSION=1.0.0 /D JUCE_APP_VERSION_HEX=0x10000 /D _WINDLL /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"Debug\\" /Fd"Debug\\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\Source\Biquad.cpp
-         Biquad.cpp
-     1>c:\users\anthony\documents\github\dat365-filter-design\source\biquad.cpp(53): warning C4244: 'initializing' : conversion from 'double' to 'const float', possible loss of data
-     1>c:\users\anthony\documents\github\dat365-filter-design\source\biquad.cpp(56): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\anthony\documents\github\dat365-filter-design\source\biquad.cpp(57): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\SDKs\VST3 SDK" /I..\..\JuceLibraryCode /I"..\..\..\..\..\..\..\Program Files (x86)\JUCE\modules" /ZI /nologo /W4 /WX- /MP /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D WIN32 /D _WINDOWS /D DEBUG /D _DEBUG /D JUCER_VS2013_78A5020=1 /D JUCE_APP_VERSION=1.0.0 /D JUCE_APP_VERSION_HEX=0x10000 /D _WINDLL /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"Debug\\" /Fd"Debug\\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\Source\PluginEditor.cpp
+         PluginEditor.cpp
+     1>c:\users\anthony\documents\github\dat365-filter-design\source\pluginprocessor.h(88): warning C4996: 'juce::AudioProcessor::getInputChannelName': was declared deprecated
+                 c:\program files (x86)\juce\modules\juce_audio_processors\processors\juce_audioprocessor.h(949) : see declaration of 'juce::AudioProcessor::getInputChannelName'
+     1>c:\users\anthony\documents\github\dat365-filter-design\source\pluginprocessor.h(88): warning C4996: 'juce::AudioProcessor::getOutputChannelName': was declared deprecated
+                 c:\program files (x86)\juce\modules\juce_audio_processors\processors\juce_audioprocessor.h(950) : see declaration of 'juce::AudioProcessor::getOutputChannelName'
+     1>c:\users\anthony\documents\github\dat365-filter-design\source\pluginprocessor.h(88): warning C4996: 'juce::AudioProcessor::isInputChannelStereoPair': was declared deprecated
+                 c:\program files (x86)\juce\modules\juce_audio_processors\processors\juce_audioprocessor.h(957) : see declaration of 'juce::AudioProcessor::isInputChannelStereoPair'
+     1>c:\users\anthony\documents\github\dat365-filter-design\source\pluginprocessor.h(88): warning C4996: 'juce::AudioProcessor::isOutputChannelStereoPair': was declared deprecated
+                 c:\program files (x86)\juce\modules\juce_audio_processors\processors\juce_audioprocessor.h(958) : see declaration of 'juce::AudioProcessor::isOutputChannelStereoPair'
+     1>c:\users\anthony\documents\github\dat365-filter-design\source\pluginprocessor.h(88): warning C4996: 'juce::AudioProcessor::silenceInProducesSilenceOut': was declared deprecated
+                 c:\program files (x86)\juce\modules\juce_audio_processors\processors\juce_audioprocessor.h(1020) : see declaration of 'juce::AudioProcessor::silenceInProducesSilenceOut'
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Anthony\Documents\GitHub\DAT365-Filter-Design\Builds\VisualStudio2013\Debug\\High Pass Filter.dll" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"Debug\\High Pass Filter.pdb" /SUBSYSTEM:WINDOWS /LARGEADDRESSAWARE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Anthony\Documents\GitHub\DAT365-Filter-Design\Builds\VisualStudio2013\Debug\High Pass Filter.lib" /MACHINE:X86 /SAFESEH:NO /DLL Debug\resources.res
          Debug\\Biquad.obj
@@ -37,4 +44,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.56
+Time Elapsed 00:00:03.17

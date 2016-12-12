@@ -38,6 +38,8 @@ private:
     // access the processor object that created it.
     HighPassFilterAudioProcessor& processor;
 	ScopedPointer<Slider> knob1;
+	ScopedPointer<Slider> knob2;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HighPassFilterAudioProcessorEditor)
 };
 

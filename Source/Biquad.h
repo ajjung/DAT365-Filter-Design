@@ -17,12 +17,14 @@ class biquad
 {
 public:
 	biquad();
+	void setGain(float gain);
 	void setCutOff(float cutoff);
 	void setSampleRate(double sampleRate);
 	void highpass(float *in, int size);
 
 private:
 	double r;
+	double m_gain;
 	double m_cutOff;
 	double m_sampleRate;
 	double c;

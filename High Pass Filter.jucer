@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="A2Rdqz" name="High Pass Filter" projectType="audioplug" version="1.0.0"
               bundleIdentifier="com.yourcompany.HighPassFilter" includeBinaryInAppConfig="1"
-              buildVST="1" buildVST3="1" buildAU="1" buildAUv3="0" buildRTAS="0"
+              buildVST="1" buildVST3="1" buildAU="1" buildAUv3="1" buildRTAS="0"
               buildAAX="0" pluginName="High Pass Filter" pluginDesc="High Pass Filter"
               pluginManufacturer="yourcompany" pluginManufacturerCode="Manu"
               pluginCode="A2rd" pluginChannelConfigs="" pluginIsSynth="0" pluginWantsMidiIn="0"
@@ -47,7 +47,7 @@
         <MODULEPATH id="juce_audio_utils" path="../../../../../Program Files (x86)/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <VS2013 targetFolder="Builds/VisualStudio2013">
+    <VS2013 targetFolder="Builds/VisualStudio2013" vst3Folder="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="High Pass Filter"/>

@@ -14,17 +14,22 @@
 
 
 //==============================================================================
-HighPassFilterAudioProcessor::HighPassFilterAudioProcessor(): m_knob1(0)
+HighPassFilterAudioProcessor::HighPassFilterAudioProcessor(): m_knob1(0),
+m_knob2(0)
 {
 	m_fCutoff = 0;
+	m_fGain = 0;
 
 	m_fCutoff = m_knob1;
+	m_fGain = m_knob2;
 
 	filterL = biquad();
 	filterL.setCutOff(m_fCutoff);
+	filterL.setGain(m_fGain);
 
 	filterR = biquad();
 	filterR.setCutOff(m_fCutoff);
+	filterR.setGain(m_fGain);
 }
 
 HighPassFilterAudioProcessor::~HighPassFilterAudioProcessor()
@@ -46,6 +51,7 @@ float HighPassFilterAudioProcessor::getParameter(int index)
 {
 	switch (index) {
 	case knob1Param: return m_knob1;
+	case knob2Param: return m_knob2;
 	default: return 0.0;
 	}
 }
@@ -59,6 +65,12 @@ void HighPassFilterAudioProcessor::setParameter(int index, float newValue)
 		filterL.setCutOff(m_fCutoff);
 		filterR.setCutOff(m_fCutoff);break;
 
+	case knob2Param: m_knob2 = newValue;
+		m_fGain = m_knob2;
+
+		filterL.setGain(m_fGain);
+		filterR.setGain(m_fGain); break;
+
 	default: break;
 	}
 }
@@ -67,6 +79,7 @@ const String HighPassFilterAudioProcessor::getParameterName(int index)
 {
 	switch (index){
 	case knob1Param: return "Cutoff";
+	case knob2Param: return "Gain";
 	default: return String::empty;
 	}
 }
@@ -180,12 +193,15 @@ void HighPassFilterAudioProcessor::prepareToPlay (double sampleRate, int samples
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
 	m_fCutoff = m_knob1;
+	m_fGain = m_knob2;
 
 	filterL.setCutOff(m_fCutoff);
 	filterL.setSampleRate(sampleRate);
+	filterL.setGain(m_fGain);
 
 	filterR.setCutOff(m_fCutoff);
 	filterR.setSampleRate(sampleRate);
+	filterR.setGain(m_fGain);
 }
 
 void HighPassFilterAudioProcessor::releaseResources()

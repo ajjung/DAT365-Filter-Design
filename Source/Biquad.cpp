@@ -15,6 +15,11 @@ m_sampleRate(0)
 {
 }
 
+void biquad::setGain(float gain)
+{
+	m_gain = gain * .01;
+}
+
 void biquad::setSampleRate(double sampleRate)
 {
 	m_sampleRate = sampleRate;
@@ -51,7 +56,7 @@ void biquad::highpass(float* const samples, int size)
 	{
 		const float in = samples[i];
 		const float out = c0 * in + lv1;
-		samples[i] = out;
+		samples[i] = out * m_gain;
 
 		lv1 = c1 * in - c3 * out + lv2;
 		lv2 = c2 * in - c4 * out;
