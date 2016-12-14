@@ -27,12 +27,6 @@ private:
 	double m_gain;
 	double m_cutOff;
 	double m_sampleRate;
-	double c;
-	double a1;
-	double a2;
-	double a3;
-	double b1;
-	double b2;
 	float *out;
 	float v1 = 0;
 	float v2 = 0;
