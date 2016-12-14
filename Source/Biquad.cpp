@@ -38,30 +38,24 @@ void biquad::highpass(float* const samples, int size)
 	const double b1 = 1.0 / (1.0 + sqrt(2.0) * n + nSquared);
 
 	// Calculate coefficients
-	double b2 = b1 * -2.0;
-	double b3 = b1;
-	double b4 = 1.0;
-	double b5 = b1 * 2.0 * (nSquared - 1.0);
-	double b6 = b1 * (1.0 - sqrt(2.0) * n + nSquared);
+	float b2 = b1 * -2.0;
+	float b3 = b1;
+	float b4 = 1.0;
+	float b5 = b1 * 2.0 * (nSquared - 1.0);
+	float b6 = b1 * (1.0 - sqrt(2.0) * n + nSquared);
 
-	const double a = 1.0 / b4;
-
-	double c0 = (float)(b1 * a);
-	double c1 = (float)(b2 * a);
-	double c2 = (float)(b3 * a);
-	double c3 = (float)(b5 * a);
-	double c4 = (float)(b6 * a);
-	float lv1 = v1, lv2 = v2;
+	float lv1 = v1;
+	float lv2 = v2;
 
 	// Process Samples by block
 	for (int i = 0; i < size; ++i)
 	{
 		const float in = samples[i];
-		const float out = c0 * in + lv1;
+		const float out = b1 * in + lv1;
 		samples[i] = out * m_gain;
 
-		lv1 = c1 * in - c3 * out + lv2;
-		lv2 = c2 * in - c4 * out;
+		lv1 = b2 * in - b5 * out + lv2;
+		lv2 = b3 * in - b6 * out;
 	}
 
 	v1 = lv1;
